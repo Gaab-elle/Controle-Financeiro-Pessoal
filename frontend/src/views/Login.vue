@@ -1,6 +1,16 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-300 to-green-500 px-4">
+  <div class="min-h-screen flex items-center justify-center px-4" style="background: linear-gradient(to bottom right, #64B5F6, #2196F3);">
     <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
+      <div class="flex justify-center mb-1">
+        <img 
+          src="/images/logo2.png" 
+          alt="TôNoAzul Logo" 
+          class="login-logo"
+          @error="showLogoFallback = true"
+          v-show="!showLogoFallback"
+        />
+        <span v-show="showLogoFallback" class="login-logo-fallback">💙</span>
+      </div>
       <h2 class="text-3xl font-bold text-center mb-8" style="color: #0A192F;">Login</h2>
       
       <div v-if="error" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
@@ -63,6 +73,8 @@ const toastStore = useToastStore()
 const router = useRouter()
 const authStore = useAuthStore()
 
+const showLogoFallback = ref(false)
+
 const form = ref({
   email: '',
   password: ''
@@ -105,6 +117,18 @@ async function handleLogin() {
   border-color: #2196F3 !important;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2) !important;
   outline: none;
+}
+
+.login-logo {
+  height: 120px;
+  width: 120px;
+  object-fit: contain;
+}
+
+.login-logo-fallback {
+  font-size: 90px;
+  line-height: 1;
+  display: inline-block;
 }
 </style>
 

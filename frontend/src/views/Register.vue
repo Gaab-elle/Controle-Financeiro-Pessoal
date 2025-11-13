@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-300 to-green-500 px-4">
+  <div class="min-h-screen flex items-center justify-center px-4" style="background: linear-gradient(to bottom right, #64B5F6, #2196F3);">
     <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
       <h2 class="text-3xl font-bold text-center mb-8" style="color: #0A192F;">Cadastro</h2>
       
