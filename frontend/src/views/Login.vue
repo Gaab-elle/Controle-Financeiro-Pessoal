@@ -1,63 +1,80 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center px-4" style="background: linear-gradient(to bottom right, #64B5F6, #2196F3);">
-    <div class="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
-      <div class="flex justify-center mb-1">
-        <img 
-          src="/images/logo2.png" 
-          alt="TôNoAzul Logo" 
-          class="login-logo"
-          @error="showLogoFallback = true"
-          v-show="!showLogoFallback"
-        />
-        <span v-show="showLogoFallback" class="login-logo-fallback">💙</span>
-      </div>
-      <h2 class="text-3xl font-bold text-center mb-8" style="color: #0A192F;">Login</h2>
-      
-      <div v-if="error" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-        {{ error }}
-      </div>
+  <div class="min-h-screen bg-white">
+    <!-- Logo no canto superior esquerdo -->
+    <div class="absolute top-6 left-6">
+      <img 
+        src="/images/logo2.png" 
+        alt="TôNoAzul Logo" 
+        class="header-logo"
+        @error="showLogoFallback = true"
+        v-show="!showLogoFallback"
+      />
+      <span v-show="showLogoFallback" class="header-logo-fallback">💙</span>
+    </div>
 
-      <form @submit.prevent="handleLogin" class="space-y-6">
-        <div>
-          <label class="block text-sm font-medium mb-2" style="color: #0A192F;">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            required
-            class="input-custom w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
-            placeholder="seu@email.com"
-          />
+    <!-- Conteúdo centralizado -->
+    <div class="min-h-screen flex items-center justify-center px-4">
+      <div class="max-w-md w-full">
+        <h2 class="text-4xl font-semibold text-center mb-8" style="color: #1F2937;">Login</h2>
+        
+        <div v-if="error" class="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+          {{ error }}
         </div>
 
-        <div>
-          <label class="block text-sm font-medium mb-2" style="color: #0A192F;">Senha</label>
-          <input
-            v-model="form.password"
-            type="password"
-            required
-            class="input-custom w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
-            placeholder="••••••••"
-          />
-        </div>
+        <form @submit.prevent="handleLogin" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium mb-2" style="color: #6B7280;">E-mail</label>
+            <input
+              v-model="form.email"
+              type="email"
+              required
+              class="input-custom w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-500 transition-colors bg-white"
+              placeholder="Digite seu e-mail"
+            />
+          </div>
 
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full text-white py-2 px-4 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          style="background-color: #2196F3;"
-          @mouseenter="$event.target.style.backgroundColor = '#1976D2'"
-          @mouseleave="$event.target.style.backgroundColor = '#2196F3'"
-        >
-          {{ loading ? 'Entrando...' : 'Entrar' }}
-        </button>
-      </form>
+          <div>
+            <label class="block text-sm font-medium mb-2" style="color: #6B7280;">Senha</label>
+            <input
+              v-model="form.password"
+              type="password"
+              required
+              class="input-custom w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-blue-500 transition-colors bg-white"
+              placeholder="Digite sua senha"
+            />
+          </div>
 
-      <p class="mt-6 text-center text-sm" style="color: #0A192F;">
-        Não tem uma conta?
-        <router-link to="/register" class="font-medium transition-colors" style="color: #2196F3;" @mouseenter="$event.target.style.color = '#1976D2'" @mouseleave="$event.target.style.color = '#2196F3'">
-          Cadastre-se
-        </router-link>
-      </p>
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center">
+              <input
+                v-model="form.remember"
+                type="checkbox"
+                class="mr-2 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <span style="color: #6B7280;">Lembrar-me</span>
+            </label>
+            <a href="#" class="text-blue-600 hover:text-blue-700 transition-colors">Esqueceu a senha?</a>
+          </div>
+
+          <button
+            type="submit"
+            :disabled="loading"
+            class="w-full text-white py-3 px-4 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+            style="background-color: #10B981;"
+            @mouseenter="$event.target.style.backgroundColor = '#059669'"
+            @mouseleave="$event.target.style.backgroundColor = '#10B981'"
+          >
+            {{ loading ? 'Entrando...' : 'Entrar' }}
+          </button>
+        </form>
+
+        <p class="mt-8 text-center text-sm" style="color: #6B7280;">
+          Não tem uma conta?
+          <router-link to="/register" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            Cadastre-se
+          </router-link>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -77,7 +94,8 @@ const showLogoFallback = ref(false)
 
 const form = ref({
   email: '',
-  password: ''
+  password: '',
+  remember: false
 })
 
 const loading = ref(false)
@@ -114,21 +132,31 @@ async function handleLogin() {
 
 <style scoped>
 .input-custom:focus {
-  border-color: #2196F3 !important;
-  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2) !important;
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
   outline: none;
 }
 
-.login-logo {
-  height: 120px;
-  width: 120px;
+.header-logo {
+  height: 40px;
+  width: auto;
   object-fit: contain;
 }
 
-.login-logo-fallback {
-  font-size: 90px;
+.header-logo-fallback {
+  font-size: 32px;
   line-height: 1;
   display: inline-block;
+}
+
+@media (max-width: 640px) {
+  .header-logo {
+    height: 32px;
+  }
+  
+  .header-logo-fallback {
+    font-size: 28px;
+  }
 }
 </style>
 
